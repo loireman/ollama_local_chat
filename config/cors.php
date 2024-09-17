@@ -15,15 +15,15 @@ return [
 |
 */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', '127.0.0.1:11434/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['*'], // Allows all methods or specify as needed
 
-    'allowed_origins' => ['*'], // This will allow all origins
+    'allowed_origins' => ['https://chat.loiri.com.ua'], // Add your origin here
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['*'], // Allows all headers or specify as needed
 
     'exposed_headers' => [],
 
