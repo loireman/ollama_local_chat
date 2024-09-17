@@ -22,9 +22,9 @@
 
 <IfModule mod_headers.c>
     # Handle CORS headers
-    Header set Access-Control-Allow-Origin "https://chat.loiri.com.ua"
-    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
-    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "*"
+    Header set Access-Control-Allow-Headers "*"
     Header set Access-Control-Allow-Credentials "true"
 </IfModule>
 
