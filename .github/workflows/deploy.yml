@@ -23,5 +23,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
           script: "cd /home/loiri/loiri.com.ua/chat/ && ./.scripts/deploy.sh"
