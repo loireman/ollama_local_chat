@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'], // Allows all methods or specify as needed
 
-    'allowed_origins' => ['https://chat.loiri.com.ua'], // Add your origin here
+    'allowed_origins' => ['https://chat.loiri.com.ua', 'http://myfakedomain.notarealtld'], // Add your origin here
 
     'allowed_origins_patterns' => [],
 

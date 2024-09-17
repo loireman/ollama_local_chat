@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
-import ollama from "ollama/browser";
+import { Ollama } from "ollama/browser";
 import { User } from "@/types";
 import InputField from "./InputField";
 import MessageField from "./MessageField";
@@ -16,6 +16,8 @@ const Chat = ({ user }: PropsWithChildren<{ user: User }>) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const ollama = new Ollama({ host: 'http://myfakedomain.notarealtld:11434' })
 
     useEffect(() => {
         if (textareaRef.current) {
