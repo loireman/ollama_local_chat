@@ -26,12 +26,13 @@ class SocialLoginController extends Controller
         if ($existingUser) {
             Auth::login($existingUser);
         } else {
+
             $newUser = User::create([
                 'name'          => $user->name,
                 'email'         => $user->email,
                 'password'      => Hash::make(Str::random(8)),
                 'photo_path'    => $user->getAvatar(),
-                'provider_token' => $user->token
+                'provider_token' =>  $user->token
             ]);
 
             Auth::login($newUser);

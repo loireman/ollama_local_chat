@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, PropsWithChildren, Dispatch, SetStateAction } from 'react';
+import { useState, createContext, useContext, PropsWithChildren, Dispatch, SetStateAction, ButtonHTMLAttributes } from 'react';
 import { Link, InertiaLinkProps } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
@@ -38,7 +38,7 @@ const Trigger = ({ children }: PropsWithChildren) => {
     );
 };
 
-const Content = ({ align = 'right', verticalAlign = 'bottom', width = '48', contentClasses = 'py-1 bg-neutral-200 dark:bg-neutral-700', children }: PropsWithChildren<{ align?: 'left'|'right', verticalAlign?: 'top'|'bottom', width?: '48', contentClasses?: string }>) => {
+const Content = ({ align = 'right', verticalAlign = 'bottom', width = '48', contentClasses = 'py-1 bg-neutral-200 dark:bg-neutral-700', children }: PropsWithChildren<{ align?: 'left'|'right', verticalAlign?: 'top'|'bottom', width?: number | string, contentClasses?: string }>) => {
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -52,15 +52,9 @@ const Content = ({ align = 'right', verticalAlign = 'bottom', width = '48', cont
 
     // Handle vertical alignment
     if (verticalAlign === 'top') {
-        alignmentClasses += ' top-0 mt-2';
+        alignmentClasses += ' top-full mt-2';
     } else if (verticalAlign === 'bottom') {
         alignmentClasses += ' bottom-full mb-2';
-    }
-
-    let widthClasses = '';
-
-    if (width === '48') {
-        widthClasses = 'w-48';
     }
 
     return (
@@ -75,10 +69,10 @@ const Content = ({ align = 'right', verticalAlign = 'bottom', width = '48', cont
                 leaveTo="opacity-0 scale-95"
             >
                 <div
-                    className={`absolute z-50 rounded-lg shadow-lg ${alignmentClasses} ${widthClasses}`}
+                    className={`absolute z-50 rounded-lg shadow-lg ${alignmentClasses} `}
                     onClick={() => setOpen(false)}
                 >
-                    <div className={`rounded-lg px-2 py-4 grid gap-2 ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
+                    <div className={`rounded-lg px-2 py-4 grid gap-2 ring-1 min-w-full ${width} ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
                 </div>
             </Transition>
         </>
@@ -99,8 +93,22 @@ const DropdownLink = ({ className = '', children, ...props }: InertiaLinkProps) 
     );
 };
 
+const DropdownButton = ({ className = '', children, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) => {
+    return (
+        <button
+            {...props}
+            className={
+                'block w-full rounded-md px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out '
+            }
+        >
+            {children}
+        </button>
+    );
+};
+
 Dropdown.Trigger = Trigger;
 Dropdown.Content = Content;
 Dropdown.Link = DropdownLink;
+Dropdown.Button = DropdownButton;
 
 export default Dropdown;

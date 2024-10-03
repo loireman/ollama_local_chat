@@ -1,7 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Message } from "ollama";
 import { useState } from "react";
-
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
@@ -24,7 +22,9 @@ export default function CodeBlock({
     return (
         <>
             <div className="bg-neutral-900 border-neutral-600 border p-2 w-full flex justify-between rounded-t-lg">
-                <span className="p-1 text-neutral-200 dark:text-neutral-300">{language} </span>
+                <span className="p-1 text-neutral-200 dark:text-neutral-300">
+                    {language}
+                </span>
                 <button
                     onClick={() => handleCopy(children)}
                     className="flex gap-1 items-center bg-neutral-200 dark:bg-neutral-800 px-2 py-1 rounded-lg"
@@ -33,9 +33,8 @@ export default function CodeBlock({
                     {isCopied ? "copied!" : "copy code"}
                 </button>
             </div>
-            <div className="overflow-x-scroll border border-neutral-600 border-t-0">
+            <div className="border border-neutral-600 border-t-0">
                 <SyntaxHighlighter
-                    // {...rest}
                     children={children.replace(/\n$/, "")}
                     language={language}
                     style={monokaiSublime}

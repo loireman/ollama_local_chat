@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'photo_path'
+        'photo_path',
+        'provider_token'
     ];
 
     /**
@@ -32,7 +33,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'provider_token'
     ];
 
     /**
@@ -48,12 +48,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function setProviderTokenAttribute($value){
-        return $this->attributes['provider_token'] = Crypt::crypt($value);
+    public function chatrooms(){
+        return $this->hasMany(ChatRoom::class, "user_id", "id");
     }
 
-    public function getProviderTokenAttribute($value)
-    {
-        return Crypt::decrypt($value);
+    public function setProviderTokenAttribute($value){
+        return $this->attributes['provider_token'] = Crypt::encryptString($value);
     }
+
+    // public function getProviderTokenAttribute($value)
+    // {
+    //     return Crypt::decryptString($value);
+    // }
 }
