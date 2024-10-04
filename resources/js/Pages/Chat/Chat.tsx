@@ -121,29 +121,25 @@ const Chat = ({
 
     // Function to handle sending a message
     const handleSendMessage = async () => {
-        if (!newMessage) return; // Do nothing if message is empty
+        if (!newMessage) return;
 
         setIsLoading(true);
         const userMessage = {
             role: "user",
             content: newMessage,
             model: selectedModel,
-        }; // Structure user message
+        };
         let aiMessageContent = "";
         let chat_id = chatID;
 
-        // Append user message to the messages state
         setMessages((prevMessages) => [...prevMessages, userMessage]);
-
-        // Clear the input box
         setNewMessage("");
 
         try {
-            // Fetch AI response from the Ollama model via streaming
             const response = await ollama.chat({
                 model: selectedModel,
-                messages: [...messages, userMessage], // Send previous messages plus new one
-                stream: true, // Enable streaming
+                messages: [...messages, userMessage],
+                stream: true,
             });
 
             for await (const part of response) {
@@ -151,39 +147,35 @@ const Chat = ({
 
                 aiMessageContent += contentPart;
 
-                // Update messages in the state
                 setMessages((prevMessages) => {
                     const updatedMessages = [...prevMessages];
                     const lastMessage =
                         updatedMessages[updatedMessages.length - 1];
 
                     if (lastMessage?.role === "assistant") {
-                        // Update the assistant's message content as it streams
                         updatedMessages[updatedMessages.length - 1].content =
                             aiMessageContent;
                     } else {
-                        // Add a new assistant message if the last one is not from the assistant
                         updatedMessages.push({
                             role: "assistant",
                             content: aiMessageContent,
                             model: selectedModel,
                         });
                     }
-
                     return updatedMessages;
                 });
             }
         } catch (error) {
             console.error("Error fetching AI response:", error);
         } finally {
-            setIsLoading(false); // Reset loading state
+            setIsLoading(false);
 
             if (!chat_id) {
                 const title = await ollama.generate({
                     model: selectedModel,
                     prompt:
                         "Create a title which contains less than 32 characters containing only spaces, letters and numbers, no comments, no special characters, no line breaks, and no extra words based on next context: " +
-                        aiMessageContent, // Send previous messages plus new one
+                        aiMessageContent,
                 });
 
                 try {
@@ -195,7 +187,7 @@ const Chat = ({
                         body: JSON.stringify({
                             name: title.response,
                             user_id: user.id,
-                        }), // Ensure the key matches what your Laravel controller expects
+                        }),
                     });
                     const data = await response.json();
                     chat_id = await data.chat_id
@@ -220,9 +212,6 @@ const Chat = ({
                 }
             }
         }
-
-        console.log(userMessage, aiMessageContent);
-
         await saveMessage(userMessage, chat_id);
         await saveMessage(
             {

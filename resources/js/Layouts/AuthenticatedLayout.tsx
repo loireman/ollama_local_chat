@@ -50,7 +50,7 @@ export default function Authenticated({
                     <div className="flex flex-col justify-between min-h-screen">
                         <div className="flex justify-end items-center h-16">
                             <Link href={route("dashboard")}>
-                                <div className="p-2 bg-neutral-700 rounded-lg">
+                                <div className={`${chatID ? "bg-neutral-800" : "bg-neutral-600"} p-2 rounded-lg`}>
                                     <Icon
                                         icon="mdi:plus"
                                         height={24}

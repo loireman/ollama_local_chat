@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('photo_path')->after('email')->nullable();
-            $table->string('provider_token')->after('remember_token')->nullable();
+            $table->text('provider_token')->after('remember_token')->nullable();
             $table->softDeletes();
         });
     }

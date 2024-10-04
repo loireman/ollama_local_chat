@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter";
 import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export default function CodeBlock({
@@ -35,10 +35,11 @@ export default function CodeBlock({
             </div>
             <div className="border border-neutral-600 border-t-0">
                 <SyntaxHighlighter
-                    children={children.replace(/\n$/, "")}
                     language={language}
                     style={monokaiSublime}
-                />
+                >
+                    {children.replace(/\n$/, "")}
+                    </SyntaxHighlighter>
             </div>
         </>
     );
