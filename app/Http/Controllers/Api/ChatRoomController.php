@@ -61,8 +61,18 @@ class ChatRoomController extends Controller
         return response()->json(200);
     }
 
-    public function destroy(): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
-        return response()->json(200);
+        $data = $request->validate([
+            'uuid' => 'required|max:255',
+        ]);
+
+        $chatRoom = ChatRoom::where('uuid', $data['uuid']);
+
+        $chatRoom->delete();
+
+        $message = "Chatroom " . $data['uuid'] . " deleted.";
+
+        return response()->json($message, 200);
     }
 }

@@ -38,7 +38,7 @@ const Trigger = ({ children }: PropsWithChildren) => {
     );
 };
 
-const Content = ({ align = 'right', verticalAlign = 'bottom', width = '48', contentClasses = 'py-1 bg-neutral-200 dark:bg-neutral-700', children }: PropsWithChildren<{ align?: 'left'|'right', verticalAlign?: 'top'|'bottom', width?: number | string, contentClasses?: string }>) => {
+const Content = ({ align = 'right', verticalAlign = 'bottom', className = 'py-1 bg-neutral-200 dark:bg-neutral-700', children }: PropsWithChildren<{ align?: 'left'|'right', verticalAlign?: 'top'|'bottom', className?: string }>) => {
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -72,7 +72,7 @@ const Content = ({ align = 'right', verticalAlign = 'bottom', width = '48', cont
                     className={`absolute z-50 rounded-lg shadow-lg ${alignmentClasses} `}
                     onClick={() => setOpen(false)}
                 >
-                    <div className={`rounded-lg px-2 py-4 grid gap-2 ring-1 min-w-full ${width} ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
+                    <div className={`rounded-lg px-2 py-4 grid gap-2 ring-1 min-w-full ring-black ring-opacity-5 ` + className}>{children}</div>
                 </div>
             </Transition>
         </>
@@ -84,7 +84,7 @@ const DropdownLink = ({ className = '', children, ...props }: InertiaLinkProps) 
         <Link
             {...props}
             className={
-                'block w-full rounded-md px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out ' +
+                'block w-full rounded-md px-4 py-2 text-start text-sm leading-5 text-neutral-700 dark:text-neutral-300 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-800 transition duration-150 ease-in-out ' +
                 className
             }
         >
@@ -98,7 +98,7 @@ const DropdownButton = ({ className = '', children, ...props }: ButtonHTMLAttrib
         <button
             {...props}
             className={
-                'block w-full rounded-md px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out '
+                'block w-full rounded-md px-4 py-2 text-start text-sm leading-5 text-neutral-700 dark:text-neutral-300 bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-800 transition duration-150 ease-in-out '
             }
         >
             {children}

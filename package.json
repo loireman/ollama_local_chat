@@ -28,6 +28,8 @@
         "@iconify/react": "^5.0.2",
         "ollama": "^0.5.9",
         "react-markdown": "^9.0.1",
-        "react-syntax-highlighter": "^15.5.0"
+        "react-select": "^5.8.2",
+        "react-syntax-highlighter": "^15.5.0",
+        "react-text-to-speech": "^0.19.5"
     }
 }

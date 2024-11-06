@@ -2,7 +2,7 @@ import { Link, Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
-import CodeBlock from "./Chat/CodeBlock";
+import CodeBlockLite from "@/Components/CodeBlockLite";
 
 const TextLoop = ({ texts }: { texts: Array<string> }) => {
     const [displayText, setDisplayText] = useState("");
@@ -173,7 +173,7 @@ export default function Welcome({
                                             <h2 className="text-xl font-semibold text-black dark:text-white">
                                                 Для Linux:
                                             </h2>
-                                            <CodeBlock
+                                            <CodeBlockLite
                                                 language="bash"
                                                 children="curl -fsSL https://ollama.com/install.sh | sh"
                                             />
@@ -183,24 +183,20 @@ export default function Welcome({
                                             <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
                                                 Для Windows:
                                             </h2>
-                                            <a
-                                                href="https://ollama.com/download/windows"
-                                                target="blank"
-                                                className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
-                                            >
-                                                Перейти за посиланням
-                                                <Icon
-                                                    width={24}
-                                                    height={24}
-                                                    icon="mdi:arrow-right"
-                                                />
-                                            </a>
                                         </div>
 
-                                        <img
-                                            className="rounded-lg mx-auto mt-4"
-                                            src="/storage/installation/ollama_windows.png"
-                                        />
+                                        <a
+                                            href="https://ollama.com/download/OllamaSetup.exe"
+                                            target="blank"
+                                            className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
+                                        >
+                                            Завантажити Ollama
+                                            <Icon
+                                                width={24}
+                                                height={24}
+                                                icon="mdi:download"
+                                            />
+                                        </a>
                                     </div>
                                 </div>
 

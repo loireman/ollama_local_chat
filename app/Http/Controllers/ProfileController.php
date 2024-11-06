@@ -41,6 +41,22 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's profile information.
+     */
+    public function updateModel(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'preferred_model' => 'required|string|max:255',
+        ]);
+
+        $request->user()->fill($validated);
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse

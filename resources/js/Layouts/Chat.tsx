@@ -1,10 +1,8 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { ListResponse, Ollama } from "ollama/browser";
+import { Ollama } from "ollama/browser";
 import { User } from "@/types";
-import InputField from "./InputField";
-import MessageField from "./MessageField";
-import Dropdown from "@/Components/Dropdown";
-import { useForm } from "@inertiajs/react";
+import InputField from "@/Components/InputField";
+import MessageField from "@/Components/MessageField";
 
 type Message = {
     role: string;
@@ -14,12 +12,18 @@ type Message = {
 
 const Chat = ({
     user,
+    ollama,
     chatID = "",
     setChatID,
+    selectedModel = "",
+    setSelectedModel,
 }: PropsWithChildren<{
     user: User;
+    ollama: Ollama;
     chatID: string;
     setChatID: React.Dispatch<React.SetStateAction<string>>;
+    selectedModel: string;
+    setSelectedModel: React.Dispatch<React.SetStateAction<string>>;
 }>) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const messageContainerRef = useRef<HTMLDivElement | null>(null);
@@ -27,24 +31,10 @@ const Chat = ({
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [models, setModels] = useState<ListResponse>();
-    const [selectedModel, setSelectedModel] = useState<string>("");
     const [_chatID, _setChatID] = useState("");
-
-    const ollama = new Ollama({ host: "http://127.0.0.1:11434" });
+    const [_responseTime, _setResponseTime] = useState<number>();
 
     useEffect(() => {
-        const ollamaList = async () => {
-            if (ollama) {
-                const list = await ollama.list();
-
-                setModels(list);
-                if (list) {
-                    setSelectedModel(list.models[0].name);
-                }
-            }
-        };
-
         const getMessages = async () => {
             if (chatID) {
                 try {
@@ -54,7 +44,7 @@ const Chat = ({
                             "Content-Type": "application/json",
                             Authorization: "Bearer " + user.provider_token,
                         },
-                        body: JSON.stringify({chat_id: chatID})
+                        body: JSON.stringify({ chat_id: chatID }),
                     });
                     const data = await response.json();
                     setMessages(data[0]);
@@ -66,7 +56,6 @@ const Chat = ({
             }
         };
 
-        ollamaList();
         getMessages();
     }, []);
 
@@ -147,6 +136,12 @@ const Chat = ({
 
                 aiMessageContent += contentPart;
 
+                if (part.done) {
+                    _setResponseTime(
+                        ((part.eval_count / part.eval_duration) * 10) ^ 9
+                    );
+                }
+
                 setMessages((prevMessages) => {
                     const updatedMessages = [...prevMessages];
                     const lastMessage =
@@ -174,8 +169,15 @@ const Chat = ({
                 const title = await ollama.generate({
                     model: selectedModel,
                     prompt:
-                        "Create a title which contains less than 32 characters containing only spaces, letters and numbers, no comments, no special characters, no line breaks, and no extra words based on next context: " +
-                        aiMessageContent,
+                        `Given the following chat message(s), create a short, plain-text title that summarizes the main topic or purpose of the conversation in a single sentence. The title should be direct and concise, describing the essence of the conversation without additional details.
+                Example:
+
+                    Chat: 'Can you help me write code to calculate the Fibonacci sequence?'
+                    Title: 'Request for Fibonacci Sequence Code Assistance'
+
+                Messages: ` +
+                        aiMessageContent +
+                        ` Title:`,
                 });
 
                 try {
@@ -190,7 +192,7 @@ const Chat = ({
                         }),
                     });
                     const data = await response.json();
-                    chat_id = await data.chat_id
+                    chat_id = await data.chat_id;
 
                     setChatID(chat_id);
 
@@ -225,42 +227,11 @@ const Chat = ({
 
     return (
         <div className="w-full h-screen mx-auto relative">
-            <div className="absolute top-5 left-5 z-10 ">
-                <Dropdown>
-                    <Dropdown.Trigger>
-                        <div className="px-4 py-2 bg-neutral-800/95 rounded-xl text-neutral-200 hover:cursor-pointer">
-                            <span className="text-xl font-semibold">
-                                Model:
-                            </span>
-                            <br />
-                            <span>{selectedModel}</span>
-                        </div>
-                    </Dropdown.Trigger>
-                    <Dropdown.Content
-                        verticalAlign="top"
-                        align="left"
-                        width="w-full"
-                    >
-                        {models?.models.map((item, key) => (
-                            <Dropdown.Button
-                                key={key}
-                                onClick={() => {
-                                    setSelectedModel(item.name);
-                                }}
-                            >
-                                <span className="whitespace-nowrap">
-                                    {item.name}
-                                </span>
-                            </Dropdown.Button>
-                        ))}
-                    </Dropdown.Content>
-                </Dropdown>
-            </div>
             <div
                 ref={messageContainerRef}
-                className="w-full h-screen max-w-7xl mx-auto relative"
+                className="w-full h-screen md:max-w-2xl lg:max-w-3xl xl:max-w-7xl mx-auto relative"
             >
-                <ul className="flex flex-col-reverse gap-6 text-black dark:text-white h-full w-full overflow-y-scroll p-6 scroll-smooth scroll-me-6">
+                <ul className="flex flex-col-reverse gap-6 text-black dark:text-white h-full max-w-full overflow-y-scroll px-12 py-6 scroll-smooth scroll-me-6">
                     {messages.toReversed().map((message, index) => (
                         <li
                             key={index}
@@ -274,6 +245,9 @@ const Chat = ({
                                 photo_path={user.photo_path}
                                 username={user.name}
                                 message={message}
+                                responseTime={
+                                    index == 0 ? _responseTime : undefined
+                                }
                             />
                         </li>
                     ))}
