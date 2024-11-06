@@ -1,66 +1,196 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ollama Local Chat
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple chat application using Ollama for local LLM inference.
 
-## About Laravel
+![site](image.png)
+## Project Structure
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+project-root/
+├── app/
+│   └── Http/
+│       ├── Controllers/
+│       ├── Middleware/
+│       └── Requests/
+├── resources/
+│   ├── views/
+│   ├── js/
+│   └── css/
+└── routes/
+    ├── api.php
+    └── web.php
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP >= 8.1
+- Composer
+- MySQL/SQLite
+- Node.js & NPM (for frontend assets)
 
-## Learning Laravel
+## Installation Guide
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repository
+```bash
+git clone https://github.com/loireman/ollama_local_chat
+cd ollama_local_chat
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Install PHP dependencies
+```bash
+composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Install NPM dependencies
+```bash
+npm install
+```
 
-## Laravel Sponsors
+4. Environment Setup
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Configure your `.env` file with database credentials
+```env
+DB_CONNECTION=sqlite
+```
 
-### Premium Partners
+6. Specify the Google credentials and redirect URI
+```env
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_REDIRECT_URI=https://www.loiri.com.ua/api/google/auth/callback
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+7. Run migrations
+```bash
+php artisan migrate
+```
 
-## Contributing
+8. Build frontend assets
+```bash
+npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Ollama Installation Guide
 
-## Code of Conduct
+### Installing Ollama
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Linux**
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
 
-## Security Vulnerabilities
+2. **macOS**
+- Download the latest version from [Ollama.com](https://ollama.com)
+- Move the downloaded app to your Applications folder
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **Windows**
+- Download and install from [Ollama.com](https://ollama.com/download/windows)
+- Run the installer and follow the prompts
 
-## License
+### Installing Models
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Start Ollama service:
+```bash
+ollama serve
+```
+
+2. Pull the desired models:
+```bash
+# Pull DeepSeek Coder v2
+ollama pull deepseek-coder-v2:latest
+
+# Other useful models
+ollama pull codellama:7b
+ollama pull mistral:7b
+```
+
+3. Verify installation:
+```bash
+ollama list
+```
+
+### Model Usage
+
+To test the model:
+```bash
+ollama run deepseek-coder "Write a hello world in Python"
+```
+
+## Running the Application
+
+1. Start the Laravel development server
+```bash
+php artisan serve
+```
+The application will be available at `http://localhost:8000`
+
+2. For development with Vite (if using)
+```bash
+npm run dev
+```
+or
+
+```bash
+npm run build
+```
+
+## Key Directories
+
+### `app/Http`
+
+- **Controllers/**: Contains all the controllers that handle requests
+- **Middleware/**: Contains custom middleware classes
+- **Requests/**: Contains form request validation classes
+
+### `resources`
+
+- **views/**: Contains all Blade template files
+- **js/**: Contains TypeScript components
+
+### `routes`
+
+- **web.php**: Contains web routes accessible via browser
+- **api.php**: Contains API routes
+
+## Common Artisan Commands
+
+```bash
+# Run migrations
+php artisan migrate
+
+# Clear application cache
+php artisan cache:clear
+
+# Clear config cache
+php artisan config:clear
+```
+
+## Additional Notes
+
+- Make sure to set appropriate file permissions
+- Configure your web server (Apache/Nginx) if deploying to production
+- Set up proper security measures before going live
+
+## Troubleshooting
+
+Common issues and their solutions:
+
+1. **Permission Issues**
+```bash
+chmod -R 777 storage bootstrap/cache
+```
+
+2. **Composer Dependencies Issues**
+```bash
+composer dump-autoload
+```
+
+3. **Artisan Command Not Found**
+```bash
+composer dump-autoload
+php artisan clear-compiled
+```

@@ -21,7 +21,6 @@ export default function MessageField({
     username: string | undefined;
     responseTime: number | undefined;
 }) {
-
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopy = (text: string) => {
@@ -43,36 +42,7 @@ export default function MessageField({
                     />
                     <div className="flex flex-col justify-end">
                         <div className="bg-neutral-200 dark:bg-neutral-800 p-4 rounded-xl whitespace-pre-wrap md:max-w-[620px] lg:max-w-3xl xl:max-w-[1220px]">
-                            <Markdown
-                                className="max-w-full"
-                                children={message.content}
-                                components={{
-                                    code(props) {
-                                        const {
-                                            children,
-                                            className,
-                                            node,
-                                            ...rest
-                                        } = props;
-                                        const match = /language-(\w+)/.exec(
-                                            className || ""
-                                        );
-                                        return match ? (
-                                            <CodeBlockLite
-                                                language={match[1]}
-                                                children={String(children)}
-                                            />
-                                        ) : (
-                                            <code
-                                                {...rest}
-                                                className={className}
-                                            >
-                                                {children}
-                                            </code>
-                                        );
-                                    },
-                                }}
-                            />
+                            {message.content}
                             <div className="flex gap-2 items-center justify-between select-none mt-3">
                                 <span className="text-end text-sm font-medium text-neutral-300">
                                     {username}

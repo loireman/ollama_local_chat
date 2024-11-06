@@ -111,34 +111,49 @@ export default function Welcome({
                                     </span>{" "}
                                     та локальних моделей
                                 </span>
-                                <a
-                                    href={
-                                        auth.user
-                                            ? route("dashboard")
-                                            : route("auth.socialite.redirect")
-                                    }
-                                    className="flex gap-2 w-full justify-center items-center bg-neutral-600 hover:bg-neutral-700 py-4 px-4 rounded-lg font-semibold text-gray-300"
-                                >
-                                    {auth.user ? (
-                                        <>
-                                            Перейти до чату{" "}
-                                            <Icon
-                                                width={24}
-                                                height={24}
-                                                icon="mdi:arrow-right"
-                                            />
-                                        </>
-                                    ) : (
-                                        <>
-                                            Увійти за допомогою{" "}
-                                            <Icon
-                                                icon="logos:google-icon"
-                                                width={24}
-                                                height={24}
-                                            />
-                                        </>
-                                    )}
-                                </a>
+                                <div className="flex gap-2">
+                                    <a
+                                        href={
+                                            auth.user
+                                                ? route("dashboard")
+                                                : route(
+                                                      "auth.socialite.redirect"
+                                                  )
+                                        }
+                                        className="flex gap-2 w-full justify-center items-center bg-neutral-600 hover:bg-neutral-700 py-4 px-4 rounded-lg font-semibold text-gray-300"
+                                    >
+                                        {auth.user ? (
+                                            <>
+                                                Перейти до чату{" "}
+                                                <Icon
+                                                    width={24}
+                                                    height={24}
+                                                    icon="mdi:arrow-right"
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                Увійти за допомогою{" "}
+                                                <Icon
+                                                    icon="logos:google-icon"
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            </>
+                                        )}
+                                    </a>
+                                    <a
+                                        href="https://github.com/loireman/ollama_local_chat"
+                                        target="blank"
+                                        className="flex gap-2 w-fit justify-center items-center bg-neutral-600 hover:bg-neutral-700 py-4 px-4 rounded-lg font-semibold text-gray-300"
+                                    >
+                                        <Icon
+                                            width={24}
+                                        height={24}
+                                        icon="mdi:github"
+                                        />
+                                    </a>
+                                </div>
                             </nav>
                         </header>
 
@@ -147,6 +162,8 @@ export default function Welcome({
                                 <h2 className="text-4xl font-semibold text-black dark:text-white">
                                     Як запустити?
                                 </h2>
+
+                                {/* Step 1: Ollama Installation */}
                                 <div className="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
                                     <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
                                         <Icon
@@ -159,15 +176,8 @@ export default function Welcome({
 
                                     <div className="pt-3 sm:pt-5">
                                         <h2 className="text-xl font-semibold text-black dark:text-white">
-                                            Крок 1: Встановлення ollama
+                                            Крок 1: Встановлення Ollama
                                         </h2>
-
-                                        <p className="mt-4 text-sm/relaxed">
-                                            Встановлення OLLAMA надасть
-                                            користувачам зручний доступ до
-                                            різноманітних моделей штучного
-                                            інтелекту
-                                        </p>
 
                                         <div className="mt-4">
                                             <h2 className="text-xl font-semibold text-black dark:text-white">
@@ -180,191 +190,211 @@ export default function Welcome({
                                         </div>
 
                                         <div className="mt-4">
+                                            <h2 className="text-xl font-semibold text-black dark:text-white">
+                                                Для macOS:
+                                            </h2>
+                                            <p className="mt-2 text-sm/relaxed">
+                                                Завантажте останню версію з{" "}
+                                                <a
+                                                    href="https://ollama.com/download/macos"
+                                                    target="blank"
+                                                    className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
+                                                >
+                                                    Завантажити Ollama для MacOS
+                                                    <Icon
+                                                        width={24}
+                                                        height={24}
+                                                        icon="mdi:download"
+                                                    />
+                                                </a>{" "}
+                                                та перемістіть додаток у папку
+                                                Applications
+                                            </p>
+                                        </div>
+
+                                        <div className="mt-4">
                                             <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
                                                 Для Windows:
                                             </h2>
+                                            <a
+                                                href="https://ollama.com/download/windows"
+                                                target="blank"
+                                                className="px-4 py-2 text-sm/relaxed bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
+                                            >
+                                                Завантажити Ollama для Windows
+                                                <Icon
+                                                    width={24}
+                                                    height={24}
+                                                    icon="mdi:download"
+                                                />
+                                            </a>
                                         </div>
-
-                                        <a
-                                            href="https://ollama.com/download/OllamaSetup.exe"
-                                            target="blank"
-                                            className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
-                                        >
-                                            Завантажити Ollama
-                                            <Icon
-                                                width={24}
-                                                height={24}
-                                                icon="mdi:download"
-                                            />
-                                        </a>
                                     </div>
                                 </div>
 
+                                {/* Step 2: Model Installation */}
                                 <div className="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
                                     <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
                                         <Icon
                                             width={32}
                                             height={32}
-                                            icon="mdi:document"
+                                            icon="mdi:cog"
                                             color="#FF2D20"
                                         />
                                     </div>
 
                                     <div className="pt-3 sm:pt-5">
                                         <h2 className="text-xl font-semibold text-black dark:text-white">
-                                            Крок 2: Додавання моделей
+                                            Крок 2: Запуск сервісу та
+                                            встановлення моделей
                                         </h2>
 
                                         <div className="mt-4">
                                             <h3 className="text-lg font-semibold text-black dark:text-white">
-                                                Ollama Models Repository
+                                                Спочатку запустіть сервіс:
                                             </h3>
-                                            <p className="mt-1 text-sm/relaxed">
-                                                Тут ви можете знайти різні
-                                                штучні інтелектуальні моделі,
-                                                спеціально призначені для різних
-                                                завдань та застосувань. Кожна
-                                                модель розроблена з певними
-                                                цілями, щоб гарантувати її
-                                                оптимальну продуктивність і
-                                                гнучкість у вирішенні
-                                                різноманітних завдань у багатьох
-                                                галузях. Чи будете ви шукати
-                                                покращити операції вашого
-                                                бізнесу, поліпшити взаємодію з
-                                                клієнтами або ж розпочати
-                                                дослідження, наші моделі
-                                                підійдуть для всіх.
-                                            </p>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children="ollama serve"
+                                            />
                                         </div>
 
-                                        <h3 className="text-lg mt-4 font-semibold text-black dark:text-white">
-                                            Приклади:
-                                        </h3>
-                                        <div className="mt-2">
-                                            <h3 className="text-md font-semibold text-black dark:text-white">
-                                                LLaMA (Large Language Model Meta
-                                                AI):
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Встановіть рекомендовані моделі:
                                             </h3>
-                                            <p className="mt-1 text-sm/relaxed">
-                                                Глибока нейронна мережа,
-                                                розроблена компанією Meta AI
-                                                (раніше Facebook AI Research).
-                                                Вона була створена шляхом
-                                                тренування на величезному
-                                                корпусі тексту і може
-                                                відповідати на питання,
-                                                перекладати мови та генерувати
-                                                текстове вміст. LLaMA має багато
-                                                варіантів, включаючи LLaMA-1,
-                                                LLLaMA-2 і LLaMA-3, кожен з яких
-                                                стає все більшим та складнішим.
-                                            </p>
-                                            <a
-                                                href="https://ollama.com/library/llama3.1"
-                                                target="blank"
-                                                className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
-                                            >
-                                                Завантажити LLaMA3.1
-                                                <Icon
-                                                    width={24}
-                                                    height={24}
-                                                    icon="mdi:arrow-right"
-                                                />
-                                            </a>
-                                        </div>
-                                        <div className="mt-2">
-                                            <h3 className="text-md font-semibold text-black dark:text-white">
-                                                LLaMA-2 Uncensored:
-                                            </h3>
-                                            <p className="mt-1 text-sm/relaxed">
-                                                Eкспериментальна версія моделі
-                                                LLaMA-2, яка була "розблокована"
-                                                або "розмитнена", що означає, що
-                                                вона може генерувати вміст, який
-                                                раніше був заборонений або
-                                                прихований з політичних чи інших
-                                                міркувань. Ця розблокована
-                                                версія LLaMA-2 може висловлювати
-                                                думки та відчуття, які можуть
-                                                бути неприйнятними для деяких
-                                                аудиторій або організацій. Це
-                                                викликало суперечки та дискусії
-                                                щодо етики та регуляції штучного
-                                                інтелекту.
-                                            </p>
-                                            <a
-                                                href="https://ollama.com/library/llama2-uncensored"
-                                                target="blank"
-                                                className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
-                                            >
-                                                Завантажити LLaMA-2 Uncensored
-                                                <Icon
-                                                    width={24}
-                                                    height={24}
-                                                    icon="mdi:arrow-right"
-                                                />
-                                            </a>
-                                        </div>
-                                        <div className="mt-2">
-                                            <h3 className="text-md font-semibold text-black dark:text-white">
-                                                DeepSeek Coder V2:
-                                            </h3>
-                                            <p className="mt-1 text-sm/relaxed">
-                                                Високотехнологічний продукт
-                                                компанії DeepSeek, китайської
-                                                компанії, спеціалізуються на
-                                                штучному інтелекті та машинному
-                                                навчанні. Це епохалістичний
-                                                розвиток попередньої моделі
-                                                DeepSeek Coder, яка була першою
-                                                відповідно до наявної публікації
-                                                інформації. DeepSeek Coder V2
-                                                може виконувати багатозадачне
-                                                завдання, включаючи текстову
-                                                генерацію, машинний переклад,
-                                                аналіз даних та інші. Він був
-                                                побудований на основі глибоких
-                                                нейронних мереж і використовує
-                                                останні досягнення в області
-                                                штучного інтелекту, щоб зробити
-                                                процес більш ефективним та
-                                                точним.
-                                            </p>
-                                            <a
-                                                href="https://ollama.com/library/deepseek-coder-v2"
-                                                target="blank"
-                                                className="px-4 py-2 bg-neutral-700 hover:bg-neutral-800 text-white rounded-lg flex gap-2 w-fit"
-                                            >
-                                                Завантажити DeepSeek Coder V2
-                                                <Icon
-                                                    width={24}
-                                                    height={24}
-                                                    icon="mdi:arrow-right"
-                                                />
-                                            </a>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children={`# Основна модель для програмування
+ollama pull deepseek-coder-v2:latest
+
+# Додаткові моделі
+ollama pull codellama:7b
+ollama pull mistral:7b`}
+                                            />
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Step 3: Project Setup */}
                                 <div className="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
                                     <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
                                         <Icon
                                             width={32}
                                             height={32}
-                                            icon="mdi:download"
+                                            icon="mdi:git"
                                             color="#FF2D20"
                                         />
                                     </div>
 
                                     <div className="pt-3 sm:pt-5">
                                         <h2 className="text-xl font-semibold text-black dark:text-white">
-                                            Крок 3: Запуск
+                                            Крок 3: Встановлення проекту
+                                        </h2>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Клонування репозиторію:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children={`git clone https://github.com/loireman/ollama_local_chat
+cd ollama_local_chat`}
+                                            />
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Встановлення залежностей:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children={`composer install
+npm install`}
+                                            />
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Налаштування середовища:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children={`cp .env.example .env
+php artisan key:generate`}
+                                            />
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Налаштування бази даних:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="env"
+                                                children={`DB_CONNECTION=sqlite`}
+                                            />
+                                            <p className="mt-2 text-sm/relaxed">
+                                                Додайте ці рядки до файлу .env
+                                            </p>
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Налаштування Google OAuth:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="env"
+                                                children={`GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_REDIRECT_URI=your_redirect_uri`}
+                                            />
+                                            <p className="mt-2 text-sm/relaxed">
+                                                Замініть значення на ваші
+                                                облікові дані Google OAuth
+                                            </p>
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Міграція бази даних:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children="php artisan migrate"
+                                            />
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <h3 className="text-lg font-semibold text-black dark:text-white">
+                                                Збірка фронтенду:
+                                            </h3>
+                                            <CodeBlockLite
+                                                language="bash"
+                                                children="npm run build"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Step 4: Application Setup */}
+                                <div className="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+                                    <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
+                                        <Icon
+                                            width={32}
+                                            height={32}
+                                            icon="mdi:rocket"
+                                            color="#FF2D20"
+                                        />
+                                    </div>
+
+                                    <div className="pt-3 sm:pt-5">
+                                        <h2 className="text-xl font-semibold text-black dark:text-white">
+                                            Крок 4: Початок роботи
                                         </h2>
 
                                         <p className="my-4 text-sm/relaxed">
-                                            Виберіть потрібну вам модель та
-                                            розпочніть спілкування за допомогою
-                                            сервісу
+                                            Тепер ви можете увійти та розпочати
+                                            спілкування з ШІ
                                         </p>
 
                                         <a
@@ -403,7 +433,23 @@ export default function Welcome({
                         </main>
 
                         <footer className="py-16 text-center text-sm text-black dark:text-white/70">
-                            Laravel v{laravelVersion} (PHP v{phpVersion})
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="flex items-center gap-2">
+                                    <span>© 2024 Andy Loiri</span>
+                                    <a
+                                        href="https://github.com/loireman/ollama_local_chat"
+                                        target="blank"
+                                        className="flex gap-2 items-center hover:text-neutral-600 dark:hover:text-white/90"
+                                    >
+                                        <Icon
+                                            width={20}
+                                            height={20}
+                                            icon="mdi:github"
+                                        />
+                                        GitHub Repository
+                                    </a>
+                                </div>
+                            </div>
                         </footer>
                     </div>
                 </div>
